@@ -1,3 +1,7 @@
+# nlw4-moveit
+
+Project made during RocketSeat's NLW#04, using React and TypeScript.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
