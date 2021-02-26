@@ -21,11 +21,11 @@ interface HomeProps {
 }
 
 // Replace this if you're working locally
-const URL = "https://nlw4-moveit-api.herokuapp.com/";
+const URL = "https://nlw4-moveit-api.herokuapp.com";
 const fetcher = (path) => axios.get(`${URL}/${path}`).then((res) => res.data);
 
 export default function Home(props: HomeProps) {
-  const { data, error } = useSWR<Array<Challenge>, any>("/challenges", fetcher);
+  const { data, error } = useSWR<Array<Challenge>, any>("challenges", fetcher);
   if (error)
     console.log(
       "Impossível buscar desafios no servidor. Rodando com desafios locais..."
