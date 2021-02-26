@@ -2,6 +2,8 @@ import styles from "../styles/pages/Home.module.css";
 
 import Head from "next/head";
 import { GetServerSideProps } from "next";
+import axios from "axios";
+import useSWR, { responseInterface } from "swr";
 
 import { ExperienceBar } from "../components/ExperienceBar";
 import { Profile } from "../components/Profile";
@@ -9,20 +11,32 @@ import { CompletedChallenges } from "../components/CompletedChallenges";
 import { Countdown } from "../components/Countdown";
 import { ChallengeBox } from "../components/ChallengeBox";
 import { CountdownProvider } from "../contexts/CountdownContext";
-import { ChallengesProvider } from "../contexts/ChallengeContext";
+import { ChallengesProvider, Challenge } from "../contexts/ChallengeContext";
 
 interface HomeProps {
   level: number;
   currentExperience: number;
   challengesCompleted: number;
+  availableChallenges: Array<Challenge>;
 }
 
+// Replace this if you're working locally
+const URL = "https://nlw4-moveit-api.herokuapp.com/";
+const fetcher = (path) => axios.get(`${URL}/${path}`).then((res) => res.data);
+
 export default function Home(props: HomeProps) {
+  const { data, error } = useSWR<Array<Challenge>, any>("/challenges", fetcher);
+  if (error)
+    console.log(
+      "Impossível buscar desafios no servidor. Rodando com desafios locais..."
+    );
+
   return (
     <ChallengesProvider
       level={props.level}
       currentExperience={props.currentExperience}
       challengesCompleted={props.challengesCompleted}
+      availableChallenges={data}
     >
       <div className={styles.container}>
         <Head>

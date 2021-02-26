@@ -8,10 +8,11 @@ interface ChallengesProviderProps {
   level: number;
   currentExperience: number;
   challengesCompleted: number;
+  availableChallenges: Array<Challenge>;
 }
 
-interface Challenge {
-  type: "body" | "eye";
+export interface Challenge {
+  area: "body" | "eye";
   description: string;
   amount: number;
 }
@@ -68,8 +69,11 @@ export function ChallengesProvider({
   }
 
   function startNewChallenge() {
-    const randomChallengeIndex = Math.floor(Math.random() * challenges.length);
-    const newChallenge = challenges[randomChallengeIndex];
+    let availableChallenges = storage.availableChallenges || challenges;
+    const randomChallengeIndex = Math.floor(
+      Math.random() * availableChallenges.length
+    );
+    const newChallenge = availableChallenges[randomChallengeIndex];
 
     setActiveChallenge(newChallenge);
 

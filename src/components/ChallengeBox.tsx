@@ -27,7 +27,7 @@ export function ChallengeBox() {
           <header>Ganhe {activeChallenge.amount} xp</header>
 
           <main>
-            <img src={`icons/${activeChallenge.type}.svg`}></img>
+            <img src={`icons/${activeChallenge.area}.svg`}></img>
             <strong>Novo desafio</strong>
             <p>{activeChallenge.description}</p>
           </main>
